@@ -20,7 +20,8 @@ playerManager.setMessageInterceptor(
 
       castDebugLogger.warn('REQUEST', request);
 
-
+      console.log(request.media.customData);
+      window.customData  = request.media.customData
       let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
       request.media.contentId=request.media.contentId;
       if(isDrmEnabled){
@@ -135,3 +136,36 @@ playerDataBinder.addEventListener(
   });
 
 context.start({ touchScreenOptimizedApp: true, playbackConfig: playbackConfig });
+
+
+// Creates a simple queue with a combination of contents.
+const DemoQueue = class extends cast.framework.QueueBase {
+  constructor() {
+    super();
+    this.myMediaUrls_ = window.customData.mediaUrls;
+  }
+  
+  
+  initialize(loadRequestData) {
+    const items = [];
+    for (const mediaUrl of this.myMediaUrls_) {
+      const item = new cast.framework.messages.QueueItem();
+      item.media = new cast.framework.messages.MediaInformation();
+      item.media.contentId = mediaUrl;
+      items.push(item);
+    }
+    let queueData = loadRequestData.queueData;
+    // Create a new queue with media from the load request if one doesn't exist.
+    if (!queueData) {
+      queueData = new cast.framework.messages.QueueData();
+      queueData.name = 'sample';
+      queueData.description = 'Sample description';
+      queueData.items = items;
+      // Start with the first item in the playlist.
+      queueData.startIndex = 0;
+      // Start from 10 seconds into the first item.
+      queueData.currentTime = 10;
+    }
+    return queueData;
+  }
+ };
