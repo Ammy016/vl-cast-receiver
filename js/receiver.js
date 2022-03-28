@@ -99,8 +99,8 @@ playerManager.setMessageInterceptor(
       metadata.subtitle = ""
       request.media.metadata = metadata;
       if(window.customData.isSeries){
-        context.start({queue: new DemoQueue()});
-        resolve(null)
+       resolve(new DemoQueue());
+      
       }
       // console.log(request,"**************************************")
       // resolve(request);
