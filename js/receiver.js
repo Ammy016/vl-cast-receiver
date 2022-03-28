@@ -1,5 +1,6 @@
 const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
+const queueManager = context.getPlayerManager().getQueueManager();
 const playbackConfig = new cast.framework.PlaybackConfig();
 
 // Listen and log all Core Events.
@@ -22,20 +23,25 @@ playerManager.setMessageInterceptor(
 
       console.log(request.media.customData);
       window.customData  = request.media.customData
-      let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
-      request.media.contentId=request.media.contentId;
-      if(isDrmEnabled){
-        request.media.contentType="application/dash+xml";
-        playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
-        playbackConfig.licenseUrl = request.media.customData.licenseUrl;
-        playbackConfig.licenseRequestHandler = requestInfo => {
-            requestInfo.headers = {};
-            requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
-            requestInfo.headers['content-type'] = 'application/dash+xml';
-        };
-      }else{
+      if(window.customData.isSeries){
+        context.start({queue: new DemoQueue()});
+      }
+      else{
+          let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
         request.media.contentId=request.media.contentId;
-        request.media.contentType=request.media.customData.contentType;
+        if(isDrmEnabled){
+          request.media.contentType="application/dash+xml";
+          playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
+          playbackConfig.licenseUrl = request.media.customData.licenseUrl;
+          playbackConfig.licenseRequestHandler = requestInfo => {
+              requestInfo.headers = {};
+              requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
+              requestInfo.headers['content-type'] = 'application/dash+xml';
+          };
+        }else{
+          request.media.contentId=request.media.contentId;
+          request.media.contentType=request.media.customData.contentType;
+        }
       }
 
 
@@ -169,3 +175,4 @@ const DemoQueue = class extends cast.framework.QueueBase {
     return queueData;
   }
  };
+
