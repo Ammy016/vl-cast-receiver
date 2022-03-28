@@ -57,19 +57,19 @@ playerManager.setMessageInterceptor(
       window.customData  = request.media.customData
           let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
         request.media.contentId=request.media.contentId;
-        if(isDrmEnabled){
-          request.media.contentType="application/dash+xml";
-          playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
-          playbackConfig.licenseUrl = request.media.customData.licenseUrl;
-          playbackConfig.licenseRequestHandler = requestInfo => {
-              requestInfo.headers = {};
-              requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
-              requestInfo.headers['content-type'] = 'application/dash+xml';
-          };
-        }else{
-          request.media.contentId=request.media.contentId;
-          request.media.contentType=request.media.customData.contentType;
-        }
+        // if(isDrmEnabled){
+        //   request.media.contentType="application/dash+xml";
+        //   playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
+        //   playbackConfig.licenseUrl = request.media.customData.licenseUrl;
+        //   playbackConfig.licenseRequestHandler = requestInfo => {
+        //       requestInfo.headers = {};
+        //       requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
+        //       requestInfo.headers['content-type'] = 'application/dash+xml';
+        //   };
+        // }else{
+        //   request.media.contentId=request.media.contentId;
+        //   request.media.contentType=request.media.customData.contentType;
+        // }
 
       request.media.streamType="BUFFERED"
       request.duration = request.media.customData.duration;
@@ -98,11 +98,12 @@ playerManager.setMessageInterceptor(
       metadata.images=[image]
       metadata.subtitle = ""
       request.media.metadata = metadata;
-      // if(window.customData.isSeries){
-      //   context.start({queue: new DemoQueue()});
-      // }
-      console.log(request,"**************************************")
-      resolve(request);
+      if(window.customData.isSeries){
+        context.start({queue: new DemoQueue()});
+        resolve(null)
+      }
+      // console.log(request,"**************************************")
+      // resolve(request);
     });
   });
 
