@@ -55,10 +55,6 @@ playerManager.setMessageInterceptor(
 
       console.log(request.media.customData);
       window.customData  = request.media.customData
-      if(window.customData.isSeries){
-        context.start({queue: new DemoQueue()});
-      }
-      else{
           let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
         request.media.contentId=request.media.contentId;
         if(isDrmEnabled){
@@ -74,8 +70,6 @@ playerManager.setMessageInterceptor(
           request.media.contentId=request.media.contentId;
           request.media.contentType=request.media.customData.contentType;
         }
-      }
-
 
       request.media.streamType="BUFFERED"
       request.duration = request.media.customData.duration;
@@ -104,6 +98,10 @@ playerManager.setMessageInterceptor(
       metadata.images=[image]
       metadata.subtitle = ""
       request.media.metadata = metadata;
+      // if(window.customData.isSeries){
+      //   context.start({queue: new DemoQueue()});
+      // }
+      console.log(request,"**************************************")
       resolve(request);
     });
   });
