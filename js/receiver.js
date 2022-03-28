@@ -3,6 +3,38 @@ const playerManager = context.getPlayerManager();
 const queueManager = context.getPlayerManager().getQueueManager();
 const playbackConfig = new cast.framework.PlaybackConfig();
 
+// Creates a simple queue with a combination of contents.
+const DemoQueue = class extends cast.framework.QueueBase {
+  constructor() {
+    super();
+    this.myMediaUrls_ = window.customData.mediaUrls;
+  }
+  
+  
+  initialize(loadRequestData) {
+    const items = [];
+    for (const mediaUrl of this.myMediaUrls_) {
+      const item = new cast.framework.messages.QueueItem();
+      item.media = new cast.framework.messages.MediaInformation();
+      item.media.contentId = mediaUrl;
+      items.push(item);
+    }
+    let queueData = loadRequestData.queueData;
+    // Create a new queue with media from the load request if one doesn't exist.
+    if (!queueData) {
+      queueData = new cast.framework.messages.QueueData();
+      queueData.name = 'sample';
+      queueData.description = 'Sample description';
+      queueData.items = items;
+      // Start with the first item in the playlist.
+      queueData.startIndex = 0;
+      // Start from 10 seconds into the first item.
+      queueData.currentTime = 10;
+    }
+    return queueData;
+  }
+ };
+
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
   event => {
@@ -142,37 +174,4 @@ playerDataBinder.addEventListener(
   });
 
 context.start({ touchScreenOptimizedApp: true, playbackConfig: playbackConfig });
-
-
-// Creates a simple queue with a combination of contents.
-const DemoQueue = class extends cast.framework.QueueBase {
-  constructor() {
-    super();
-    this.myMediaUrls_ = window.customData.mediaUrls;
-  }
-  
-  
-  initialize(loadRequestData) {
-    const items = [];
-    for (const mediaUrl of this.myMediaUrls_) {
-      const item = new cast.framework.messages.QueueItem();
-      item.media = new cast.framework.messages.MediaInformation();
-      item.media.contentId = mediaUrl;
-      items.push(item);
-    }
-    let queueData = loadRequestData.queueData;
-    // Create a new queue with media from the load request if one doesn't exist.
-    if (!queueData) {
-      queueData = new cast.framework.messages.QueueData();
-      queueData.name = 'sample';
-      queueData.description = 'Sample description';
-      queueData.items = items;
-      // Start with the first item in the playlist.
-      queueData.startIndex = 0;
-      // Start from 10 seconds into the first item.
-      queueData.currentTime = 10;
-    }
-    return queueData;
-  }
- };
 
