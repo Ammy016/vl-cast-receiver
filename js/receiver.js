@@ -71,12 +71,12 @@ playerManager.setMessageInterceptor(
         //   request.media.contentType=request.media.customData.contentType;
         // }
 
-      request.media.streamType="BUFFERED"
-      request.duration = request.media.customData.duration;
-
       if(request.media.customData && request.media.customData.DVR){
         console.log(cast.framework.messages.StreamType.LIVE)
         request.media.streamType = cast.framework.messages.StreamType.LIVE;
+      }else{
+        request.media.streamType="BUFFERED"
+        request.duration = request.media.customData.duration;
       }
 
       // playerManager
