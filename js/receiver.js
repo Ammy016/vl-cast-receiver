@@ -75,9 +75,10 @@ playerManager.setMessageInterceptor(
       request.duration = request.media.customData.duration;
 
       if(request.media.customData && request.media.customData.DVR){
+        console.log(cast.framework.messages.StreamType.LIVE)
         request.media.streamType = cast.framework.messages.StreamType.LIVE;
       }
-      
+
       // playerManager
       // .setMediaPlaybackInfoHandler(
       //   (loadRequestData, playbackConfig) => {
