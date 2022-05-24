@@ -73,6 +73,11 @@ playerManager.setMessageInterceptor(
 
       request.media.streamType="BUFFERED"
       request.duration = request.media.customData.duration;
+
+      if(request.media.customData && request.media.customData.DVR){
+        request.media.streamType = cast.framework.messages.StreamType.LIVE;
+      }
+      
       // playerManager
       // .setMediaPlaybackInfoHandler(
       //   (loadRequestData, playbackConfig) => {
