@@ -1,39 +1,6 @@
 const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
-const queueManager = context.getPlayerManager().getQueueManager();
 const playbackConfig = new cast.framework.PlaybackConfig();
-
-// Creates a simple queue with a combination of contents.
-const DemoQueue = class extends cast.framework.QueueBase {
-  constructor() {
-    super();
-    this.myMediaUrls_ = window.customData.mediaUrls;
-  }
-  
-  
-  initialize(loadRequestData) {
-    const items = [];
-    for (const mediaUrl of this.myMediaUrls_) {
-      const item = new cast.framework.messages.QueueItem();
-      item.media = new cast.framework.messages.MediaInformation();
-      item.media.contentId = mediaUrl;
-      items.push(item);
-    }
-    let queueData = loadRequestData.queueData;
-    // Create a new queue with media from the load request if one doesn't exist.
-    if (!queueData) {
-      queueData = new cast.framework.messages.QueueData();
-      queueData.name = 'sample';
-      queueData.description = 'Sample description';
-      queueData.items = items;
-      // Start with the first item in the playlist.
-      queueData.startIndex = 0;
-      // Start from 10 seconds into the first item.
-      queueData.currentTime = 10;
-    }
-    return queueData;
-  }
- };
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -53,23 +20,22 @@ playerManager.setMessageInterceptor(
 
       castDebugLogger.warn('REQUEST', request);
 
-      console.log(request.media.customData);
-      window.customData  = request.media.customData
-          let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
+
+      let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
+      request.media.contentId=request.media.contentId;
+      if(isDrmEnabled){
+        request.media.contentType="application/dash+xml";
+        playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
+        playbackConfig.licenseUrl = request.media.customData.licenseUrl;
+        playbackConfig.licenseRequestHandler = requestInfo => {
+            requestInfo.headers = {};
+            requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
+            requestInfo.headers['content-type'] = 'application/dash+xml';
+        };
+      }else{
         request.media.contentId=request.media.contentId;
-        // if(isDrmEnabled){
-        //   request.media.contentType="application/dash+xml";
-        //   playbackConfig.protectionSystem = cast.framework.ContentProtection.WIDEVINE;
-        //   playbackConfig.licenseUrl = request.media.customData.licenseUrl;
-        //   playbackConfig.licenseRequestHandler = requestInfo => {
-        //       requestInfo.headers = {};
-        //       requestInfo.headers['X-AxDRM-Message'] = request.media.customData.licenseToken
-        //       requestInfo.headers['content-type'] = 'application/dash+xml';
-        //   };
-        // }else{
-        //   request.media.contentId=request.media.contentId;
-        //   request.media.contentType=request.media.customData.contentType;
-        // }
+        request.media.contentType=request.media.customData.contentType;
+      }
 
       if(request.media.customData && request.media.customData.DVR){
         console.log(cast.framework.messages.StreamType.LIVE)
@@ -78,7 +44,6 @@ playerManager.setMessageInterceptor(
         request.media.streamType="BUFFERED"
         request.duration = request.media.customData.duration;
       }
-
       // playerManager
       // .setMediaPlaybackInfoHandler(
       //   (loadRequestData, playbackConfig) => {
@@ -104,14 +69,7 @@ playerManager.setMessageInterceptor(
       metadata.images=[image]
       metadata.subtitle = ""
       request.media.metadata = metadata;
-      if(window.customData.isSeries){
-        let queue = new DemoQueue()
-        console.log("********************",queue)
-        resolve(request)
-      
-      }
-      // console.log(request,"**************************************")
-      // resolve(request);
+      resolve(request);
     });
   });
 
@@ -181,4 +139,3 @@ playerDataBinder.addEventListener(
   });
 
 context.start({ touchScreenOptimizedApp: true, playbackConfig: playbackConfig });
-
