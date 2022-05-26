@@ -18,7 +18,8 @@ playerManager.setMessageInterceptor(
     console.log(data)
     const liveSeekableRange =  new cast.framework.messages.LiveSeekableRange()
     console.log(liveSeekableRange)
-    playerManager.seek(data.currentTime)
+    // playerManager.seek(data.currentTime)
+    playerManager.load(new cast.framework.messages.LoadRequestData())
   }
 ) 
 
