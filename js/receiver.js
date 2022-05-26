@@ -1,5 +1,6 @@
 const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
+const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
 
 // Listen and log all Core Events.
@@ -7,6 +8,13 @@ playerManager.addEventListener(cast.framework.events.category.CORE,
   event => {
     console.log("Core event: " + event.type);
 });
+
+playerManager.setMessageInterceptor(
+  cast.framework.messages.MessageType.SEEK,
+  data => {
+    console.log(data)
+  }
+)
 
 playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.LOAD,
@@ -20,7 +28,7 @@ playerManager.setMessageInterceptor(
 
       castDebugLogger.warn('REQUEST', request);
 
-
+      console.log(requestData)
       let isDrmEnabled = request.media.customData && request.media.customData.isDrmEnabled;
       request.media.contentId=request.media.contentId;
       if(isDrmEnabled){
