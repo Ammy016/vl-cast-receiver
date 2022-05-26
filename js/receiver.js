@@ -13,6 +13,7 @@ playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.SEEK,
   data => {
     console.log(data)
+    playerManager.seek(data.currentTime)
   }
 )
 
