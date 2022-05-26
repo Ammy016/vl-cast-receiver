@@ -9,20 +9,28 @@ playerManager.addEventListener(cast.framework.events.category.CORE,
     console.log("Core event: " + event.type);
 });
 
-playerManager.setMessageInterceptor(
-  cast.framework.messages.MessageType.SEEK,
-  data => {
-    if(data.currentTime ==  undefined){
-      return
-    }
-    console.log(data)
-    // const liveSeekableRange =  new cast.framework.messages.LiveSeekableRange()
-    // console.log(liveSeekableRange,playerManager.getAbsoluteTimeForMediaTime())
-    console.log(playerManager.getLiveSeekableRange())
-    // playerManager.seek(data.currentTime)
-    // playerManager.load(new cast.framework.messages.LoadRequestData())
-  }
-) 
+// playerManager.setMessageInterceptor(
+//   cast.framework.messages.MessageType.SEEK,
+//   data => {
+//     if(data.currentTime ==  undefined){
+//       return
+//     }
+//     console.log(data)
+//     // const liveSeekableRange =  new cast.framework.messages.LiveSeekableRange()
+//     // console.log(liveSeekableRange,playerManager.getAbsoluteTimeForMediaTime())
+//     console.log(playerManager.getLiveSeekableRange())
+//     // playerManager.seek(data.currentTime)
+//     // playerManager.load(new cast.framework.messages.LoadRequestData())
+//   }
+// )
+
+playerManager.addEventListener(
+  cast.framework.events.EventType.REQUEST_SEEK, (event) => {
+    // Write your own event handling code, for example
+    // using the event.mediaStatus value
+    console.log(event,playerManager.getLiveSeekableRange())
+    // playerManager.seek()
+})
 
 playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.LOAD,
