@@ -104,12 +104,12 @@ playerManager.setMessageInterceptor(
 
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
-    castDebugLogger.warn('PLAYER LOADED', this.allData);
+    castDebugLogger.warn('PLAYER LOADED', this.allCCData);
     
     const textTracksManager = playerManager.getTextTracksManager();
 
     if(this.allCCData && this.allCCData.length > 0){
-      for(var i=0 ; i< this.allCCData.length; i ++){
+      for(var i=0 ; i< this.allCCData.length; i++){
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
