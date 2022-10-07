@@ -116,7 +116,9 @@ playerManager.addEventListener(
         textTracksManager.addTracks([track]);
       }
     }
+
     const alltracks = textTracksManager.getTracks();
+    console.log(alltracks);
     textTracksManager.setActiveByIds([alltracks[0].trackId]);
    
   });
