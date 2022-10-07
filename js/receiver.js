@@ -107,6 +107,7 @@ playerManager.addEventListener(
     castDebugLogger.warn('PLAYER LOADED', this.allCCData);
     
     const textTracksManager = playerManager.getTextTracksManager();
+    console.log(this.allCCData);
 
     if(this.allCCData && this.allCCData.length > 0){
       for(var i=0 ; i< this.allCCData.length; i++){
@@ -117,6 +118,7 @@ playerManager.addEventListener(
         textTracksManager.addTracks([track]);
       }
     }
+    textTracksManager.setActiveByIds(track[0].trackContentId)
 
     // Set the first matching language text track to be active
     // textTracksManager.setActiveByLanguage('en');
