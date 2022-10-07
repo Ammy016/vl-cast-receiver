@@ -112,13 +112,14 @@ playerManager.addEventListener(
     if(this.allCCData && this.allCCData.length > 0){
       for(var i=0 ; i< this.allCCData.length; i++){
         let track = textTracksManager.createTrack();
+        let trackID=track.trackId;
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
-        track.name=this.allCCData[i].language;
-        textTracksManager.addTracks([track]);
+        track.language=this.allCCData[i].language;
+        textTracksManager.addTracks([trackID]);
       }
     }
-    textTracksManager.setActiveByIds(track[0].trackContentId)
+    // textTracksManager.setActiveByIds(track[0].trackContentId)
 
     // Set the first matching language text track to be active
     // textTracksManager.setActiveByLanguage('en');
