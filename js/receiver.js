@@ -105,24 +105,20 @@ playerManager.setMessageInterceptor(
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
     castDebugLogger.warn('PLAYER LOADED', this.allCCData);
-    
     const textTracksManager = playerManager.getTextTracksManager();
     console.log(this.allCCData);
-
     if(this.allCCData && this.allCCData.length > 0){
-      for(var i=0 ; i< this.allCCData.length; i++){
+      for(var i=0 ; i<this.allCCData.length; i++){
         let track = textTracksManager.createTrack();
-        let trackID=track.trackId;
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
-        track.language=this.allCCData[i].language;
-        textTracksManager.addTracks([trackID]);
+        track.language='en';
+        textTracksManager.addTracks([track]);
       }
     }
-    // textTracksManager.setActiveByIds(track[0].trackContentId)
-
-    // Set the first matching language text track to be active
-    // textTracksManager.setActiveByLanguage('en');
+    const alltracks = textTracksManager.getTracks();
+    textTracksManager.setActiveByIds([alltracks[0].trackId]);
+   
   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
