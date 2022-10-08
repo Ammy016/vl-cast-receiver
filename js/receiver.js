@@ -121,7 +121,8 @@ playerManager.addEventListener(
       let track=tracks[0];
       track.isInband=true;
       track.language='en';
-      textTracksManager.addTracks([track.trackId]);
+      textTracksManager.setActiveByIds([track.trackId]);
+
     }
 
     // const alltracks = textTracksManager.getTracks();
