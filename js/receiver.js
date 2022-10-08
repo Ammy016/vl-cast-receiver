@@ -117,16 +117,16 @@ playerManager.addEventListener(
       }
     }
     else{
-      console.log(textTracksManager.getTracks());
-      let track = textTracksManager.createTrack();
+      let tracks=textTracksManager.getTracks();
+      let track=tracks[0];
       track.isInband=true;
       track.language='en';
-      textTracksManager.addTracks([track]);
+      textTracksManager.addTracks([track.trackId]);
     }
 
-    const alltracks = textTracksManager.getTracks();
-    console.log(alltracks);
-    textTracksManager.setActiveByIds([alltracks[1].trackId]);
+    // const alltracks = textTracksManager.getTracks();
+    // console.log(alltracks);
+    // textTracksManager.setActiveByIds([alltracks[0].trackId]);
    
   });
 
