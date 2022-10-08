@@ -121,10 +121,12 @@ playerManager.addEventListener(
     }
     else{
       let tracks=textTracksManager.getTracks();
-      let track=tracks[0];
-      track.isInband=true;
-      track.language='en';
-      textTracksManager.setActiveByIds([track.trackId]);
+      if(tracks.length>0){
+        let track=tracks[0];
+        track.isInband=true;
+        track.language='en';
+        textTracksManager.setActiveByIds([track.trackId]);
+      }
     }
   });
 
