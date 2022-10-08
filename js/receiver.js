@@ -115,6 +115,9 @@ playerManager.addEventListener(
         track.language='en';
         textTracksManager.addTracks([track]);
       }
+      const alltracks = textTracksManager.getTracks();
+      console.log(alltracks);
+      textTracksManager.setActiveByIds([alltracks[0].trackId]);
     }
     else{
       let tracks=textTracksManager.getTracks();
@@ -122,13 +125,7 @@ playerManager.addEventListener(
       track.isInband=true;
       track.language='en';
       textTracksManager.setActiveByIds([track.trackId]);
-
     }
-
-    // const alltracks = textTracksManager.getTracks();
-    // console.log(alltracks);
-    // textTracksManager.setActiveByIds([alltracks[0].trackId]);
-   
   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
