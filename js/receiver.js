@@ -120,7 +120,6 @@ playerManager.addEventListener(
       let track = textTracksManager.createTrack();
       track.isInband=true;
       track.language='en';
-      track.trackContentType = 'text/vtt';
       textTracksManager.addTracks([track]);
     }
 
