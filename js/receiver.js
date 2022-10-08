@@ -119,6 +119,7 @@ playerManager.addEventListener(
     else{
       let track = textTracksManager.createTrack();
       track.isInband=true;
+      textTracksManager.addTracks([track]);
     }
 
     const alltracks = textTracksManager.getTracks();
