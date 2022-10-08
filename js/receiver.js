@@ -117,6 +117,7 @@ playerManager.addEventListener(
       }
     }
     else{
+      console.log(textTracksManager.getTracks());
       let track = textTracksManager.createTrack();
       track.isInband=true;
       track.language='en';
