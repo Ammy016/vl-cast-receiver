@@ -85,8 +85,10 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
-      if(request.media.customData.subTitles)
+      if(request.media.customData.subTitles){
         this.allCCData=request.media.customData.subTitles;
+        console.log(languageMap);
+      }
 
 
       var metadata = new cast.framework.messages.MovieMediaMetadata();
