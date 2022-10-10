@@ -85,7 +85,6 @@ playerManager.setMessageInterceptor(
 
       // Add metadata
       if(request.media.customData.subTitles){
-
         this.allCCData=request.media.customData.subTitles;
         console.log(request.media.customData.subTitles);
       }
@@ -140,7 +139,7 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 
 function getLanguageFromMap(key){
   console.log(languageMap);
-  let array=languageMap['data'];
+  let array=languageMap;
   array.map((ele)=>{
     if(ele.name==key || ele.nativeName==key){
       return ele.codeName;
