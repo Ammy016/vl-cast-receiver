@@ -2,8 +2,6 @@ const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
-import {languageMap} from '../assets/languageMap.js';
-
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -84,10 +82,8 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
-      if(request.media.customData.subTitles){
+      if(request.media.customData.subTitles)
         this.allCCData=request.media.customData.subTitles;
-        console.log(request.media.customData.subTitles);
-      }
 
 
       var metadata = new cast.framework.messages.MovieMediaMetadata();
@@ -108,7 +104,7 @@ playerManager.setMessageInterceptor(
 
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
-    castDebugLogger.warn('PLAYER LOADED');
+    castDebugLogger.warn('PLAYER LOADED', this.allCCData);
     const textTracksManager = playerManager.getTextTracksManager();
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
@@ -116,7 +112,7 @@ playerManager.addEventListener(
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
-        track.language=getLanguageFromMap(this.allCCData[i].language);
+        track.language='en';
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
@@ -128,6 +124,7 @@ playerManager.addEventListener(
       if(tracks.length>0){
         let track=tracks[0];
         track.isInband=true;
+        track.language='en';
         textTracksManager.setActiveByIds([track.trackId]);
       }
     }
@@ -136,17 +133,6 @@ playerManager.addEventListener(
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
    castDebugLogger.warn('ERROR', event);
 });
-
-function getLanguageFromMap(key){
-  console.log(languageMap);
-  let array=languageMap;
-  array.map((ele)=>{
-    if(ele.name==key || ele.nativeName==key){
-      return ele.codeName;
-    }
-  })
-  return null;
-}
 
 /** Debug Logger **/
 const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
