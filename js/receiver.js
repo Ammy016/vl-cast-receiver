@@ -41,9 +41,9 @@ playerManager.setMessageInterceptor(
     if (request.media && request.media.entity) {
       request.media.contentId = request.media.entity;
     }
-    if(request.media.customData.subTitles){
-      this.allCCData=request.media.customData.subTitles;
-    }
+    // if(request.media.customData.subTitles){
+    //   this.allCCData=request.media.customData.subTitles;
+    // }
     return new Promise((resolve, reject) => {
       console.log(languageMap);
 
@@ -106,6 +106,7 @@ playerManager.setMessageInterceptor(
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
     castDebugLogger.warn('PLAYER LOADED');
+    console.log(this.request);
     const textTracksManager = playerManager.getTextTracksManager();
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
