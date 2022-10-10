@@ -626,4 +626,4 @@
         }
     ]
 
-export const languageMap=data;
+module.exports=data;
