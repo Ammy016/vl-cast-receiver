@@ -3,7 +3,11 @@ const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
 // import {languageMap} from '../assets/languageMap.js';
-
+let languageMap;
+define(function (require) {
+  //Notice the space between require and the arguments.
+  vlanguageMap = require ('../assets/languageMap');
+});
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -139,7 +143,6 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 });
 
 function getLanguageFromMap(key){
-  const languageMap=require('../assets/languageMap.js');
   console.log(languageMap);
   let val=null;
   if(languageMap && languageMap.length>0){
