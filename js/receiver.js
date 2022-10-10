@@ -35,7 +35,7 @@ playerManager.addEventListener(
     console.log(event,playerManager.getLiveSeekableRange())
     // playerManager.seek()
 })
-
+allCCData=null;
 playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.LOAD,
   request => {
@@ -87,7 +87,6 @@ playerManager.setMessageInterceptor(
       // Add metadata
       if(request.media.customData.subTitles){
         this.allCCData=request.media.customData.subTitles;
-        console.log(languageMap);
       }
 
 
@@ -139,14 +138,16 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 });
 
 function getLanguageFromMap(key){
+  let val=null;
   if(languageMap && languageMap.length>0){
-    array.map((ele)=>{
-      if(ele.name==key || ele.nativeName==key){
-        return ele.codeName;
+    for(let i=0;i<languageMap.length;i++){
+      if(languageMap[i].name==key || languageMap[i].nativeName==key){
+        val= languageMap[i].codeName;
+        break;
       }
-    })
-    return null;
+    }
   }
+  return val;
 }
 
 /** Debug Logger **/
