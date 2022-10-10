@@ -106,7 +106,7 @@ playerManager.setMessageInterceptor(
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
     castDebugLogger.warn('PLAYER LOADED');
-    console.log(this.request);
+    console.log(requestData)
     const textTracksManager = playerManager.getTextTracksManager();
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
