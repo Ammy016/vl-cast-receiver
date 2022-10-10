@@ -42,9 +42,8 @@ playerManager.setMessageInterceptor(
     if (request.media && request.media.entity) {
       request.media.contentId = request.media.entity;
     }
-
     return new Promise((resolve, reject) => {
-
+      console.log(languageMap);
 
       castDebugLogger.warn('REQUEST', request);
 
@@ -86,12 +85,8 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
-      if(request.media.customData.subTitles){
-
-        console.log(request.media.customData.subTitles);
-        // this.allCCData=request.media.customData.subTitles;
-        // console.log(this.allCCData);
-      }
+      if(request.media.customData.subTitles)
+        this.allCCData=request.media.customData.subTitles;
 
 
       var metadata = new cast.framework.messages.MovieMediaMetadata();
