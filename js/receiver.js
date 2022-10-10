@@ -136,6 +136,7 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 });
 
 function getLanguageFromMap(key){
+  console.log(languageMap);
   let array=languageMap['data'];
   array.map((ele)=>{
     if(ele.name==key || ele.nativeName==key){
