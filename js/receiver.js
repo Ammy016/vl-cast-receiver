@@ -3,7 +3,7 @@ const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
 // import {languageMap} from '../assets/languageMap.js';
-const languageMap=require('../assets/languageMap.js');
+
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -117,8 +117,8 @@ playerManager.addEventListener(
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
-        // track.language=getLanguageFromMap(this.allCCData[i].language);
-        track.language='en';
+        track.language=getLanguageFromMap(this.allCCData[i].language);
+        // track.language='en';
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
@@ -139,18 +139,19 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
    castDebugLogger.warn('ERROR', event);
 });
 
-// function getLanguageFromMap(key){
-//   let val=null;
-//   if(languageMap && languageMap.length>0){
-//     for(let i=0;i<languageMap.length;i++){
-//       if(languageMap[i].name==key || languageMap[i].nativeName==key){
-//         val= languageMap[i].codeName;
-//         break;
-//       }
-//     }
-//   }
-//   return val;
-// }
+function getLanguageFromMap(key){
+  const languageMap=require('../assets/languageMap.js');
+  let val=null;
+  if(languageMap && languageMap.length>0){
+    for(let i=0;i<languageMap.length;i++){
+      if(languageMap[i].name==key || languageMap[i].nativeName==key){
+        val= languageMap[i].codeName;
+        break;
+      }
+    }
+  }
+  return val;
+}
 
 /** Debug Logger **/
 const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
