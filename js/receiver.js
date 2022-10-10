@@ -84,8 +84,11 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
-      if(request.media.customData.subTitles)
+      if(request.media.customData.subTitles){
+
         this.allCCData=request.media.customData.subTitles;
+        console.log(request.media.customData.subTitles);
+      }
 
 
       var metadata = new cast.framework.messages.MovieMediaMetadata();
@@ -106,7 +109,7 @@ playerManager.setMessageInterceptor(
 
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
-    castDebugLogger.warn('PLAYER LOADED', this.allCCData);
+    castDebugLogger.warn('PLAYER LOADED');
     const textTracksManager = playerManager.getTextTracksManager();
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
