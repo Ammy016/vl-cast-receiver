@@ -44,7 +44,6 @@ playerManager.setMessageInterceptor(
     let ref=this;
 
     return new Promise((resolve, reject) => {
-      console.log(languageMap);
 
       castDebugLogger.warn('REQUEST', request);
 
