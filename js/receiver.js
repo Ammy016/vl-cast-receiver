@@ -2,7 +2,7 @@ const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
-const languageMap=require('./assets/languageMap.json');
+import * as languageMap from './assets/languageMap.json';
 
 
 // Listen and log all Core Events.
