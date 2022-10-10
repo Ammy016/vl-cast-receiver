@@ -1,5 +1,5 @@
 
-    data= [
+   const data= [
         {
             "guid": "af-guid",
             "name": "Afrikaans",
