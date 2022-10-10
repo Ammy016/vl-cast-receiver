@@ -2,6 +2,8 @@ const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
+const languageMap=require('./assets/languageMap.json');
+
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -112,7 +114,7 @@ playerManager.addEventListener(
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
-        track.language='en';
+        track.language=getLanguageFromMap(this.allCCData[i].language);
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
@@ -124,7 +126,6 @@ playerManager.addEventListener(
       if(tracks.length>0){
         let track=tracks[0];
         track.isInband=true;
-        track.language='en';
         textTracksManager.setActiveByIds([track.trackId]);
       }
     }
@@ -133,6 +134,16 @@ playerManager.addEventListener(
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
    castDebugLogger.warn('ERROR', event);
 });
+
+function getLanguageFromMap(key){
+  let array=languageMap['data'];
+  array.map((ele)=>{
+    if(ele.name==key || ele.nativeName==key){
+      return ele.codeName;
+    }
+  })
+  return null;
+}
 
 /** Debug Logger **/
 const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
