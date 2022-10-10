@@ -626,4 +626,4 @@
         }
     ]
 
-    export default languageMap=data;
+    module.exports.languageMap=data;
