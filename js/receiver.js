@@ -140,6 +140,7 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 
 function getLanguageFromMap(key){
   const languageMap=require('../assets/languageMap.js');
+  console.log(languageMap);
   let val=null;
   if(languageMap && languageMap.length>0){
     for(let i=0;i<languageMap.length;i++){
