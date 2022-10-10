@@ -88,8 +88,8 @@ playerManager.setMessageInterceptor(
       // Add metadata
       if(request.media.customData.subTitles){
 
-        console.log(equest.media.customData.subTitles);
-        this.allCCData=request.media.customData.subTitles;
+        console.log(request.media.customData.subTitles);
+        // this.allCCData=request.media.customData.subTitles;
         console.log(this.allCCData);
       }
 
