@@ -42,6 +42,7 @@ playerManager.setMessageInterceptor(
       request.media.contentId = request.media.entity;
     }
     let ref=this;
+
     return new Promise((resolve, reject) => {
       console.log(languageMap);
 
@@ -85,9 +86,9 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
-      if(request.media.customData.subTitles){
-        ref.allCCData=request.media.customData.subTitles;
-      }
+    if(request.media.customData.subTitles){
+      ref.allCCData=request.media.customData.subTitles;
+    }
 
       var metadata = new cast.framework.messages.MovieMediaMetadata();
       var image = new cast.framework.messages.Image(request.media.customData.mediaImage);
@@ -96,7 +97,7 @@ playerManager.setMessageInterceptor(
       metadata.images=[image]
       metadata.subtitle = ""
       request.media.metadata = metadata;
-    
+      resolve(request);
     });
   });
 
