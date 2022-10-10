@@ -3,7 +3,7 @@ const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
 // import {languageMap} from '../assets/languageMap.js';
-
+const languageMap=require('../assets/languageMap');
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
@@ -44,7 +44,7 @@ playerManager.setMessageInterceptor(
     let ref=this;
 
     return new Promise((resolve, reject) => {
-      // console.log(languageMap);
+      console.log(languageMap);
 
       castDebugLogger.warn('REQUEST', request);
 
