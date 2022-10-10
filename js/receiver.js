@@ -35,7 +35,6 @@ playerManager.addEventListener(
     console.log(event,playerManager.getLiveSeekableRange())
     // playerManager.seek()
 })
-allCCData=null;
 playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.LOAD,
   request => {
