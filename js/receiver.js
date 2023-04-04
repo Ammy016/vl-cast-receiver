@@ -652,6 +652,11 @@ playerManager.addEventListener(cast.framework.events.category.CORE,
 // )
 
 
+playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
+    console.log(request,'DAMAN');
+    // write logic to convert language codes here
+  });
+
 
 playerManager.addEventListener(
   cast.framework.events.EventType.REQUEST_SEEK, (event) => {
