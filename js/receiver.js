@@ -762,7 +762,7 @@ playerManager.addEventListener(
       }
     }
 
-    playerManager.setMessageInterceptor(cast.framework.events.EventType.TRACKS_CHANGED, request => {
+    playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
         console.log(request,'EDIT');
         // write logic to convert language codes here
       });
