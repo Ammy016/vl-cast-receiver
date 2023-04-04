@@ -762,11 +762,12 @@ playerManager.addEventListener(
       }
     }
 
-    playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
-        console.log(request,'EDIT');
-        // write logic to convert language codes here
-      });
+  });
 
+
+  playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
+    console.log(request,'EDIT');
+    // write logic to convert language codes here
   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
