@@ -763,6 +763,11 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
    castDebugLogger.warn('ERROR', event);
 });
 
+
+playerManager.addEventListener(cast.framework.events.EventType.TRACKS_CHANGED, event => { 
+    console.log(event);
+ });
+
 function getLanguageFromMap(key){
   console.log(languageMap);
   let val=null;
