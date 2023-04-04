@@ -764,7 +764,7 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
 });
 
 
-playerManager.addEventListener(cast.framework.events.EventType.TRACKS_CHANGED, event => { 
+playerManager.addEventListener(cast.framework.events.EventType.REQUEST_USER_ACTION, event => { 
     console.log(event);
  });
 
