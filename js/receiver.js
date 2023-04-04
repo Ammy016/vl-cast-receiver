@@ -726,16 +726,7 @@ playerManager.setMessageInterceptor(
     });
   });
 
-  playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
-    console.log(request,'EDIT');
-    // write logic to convert language codes here
-  });
 
-  playerManager.setMessageInterceptor(cast.framework.messages.MessageType.USER_ACTION
-    , request => {
-    console.log(request,'USER');
-    // write logic to convert language codes here
-  });
 
   
   playerManager.addEventListener(
@@ -770,6 +761,12 @@ playerManager.addEventListener(
         textTracksManager.setActiveByIds([track.trackId]);
       }
     }
+
+    playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
+        console.log(request,'EDIT');
+        // write logic to convert language codes here
+      });
+
   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
