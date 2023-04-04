@@ -735,19 +735,28 @@ playerManager.addEventListener(
     castDebugLogger.warn('PLAYER LOADED');
     console.log(requestData)
     const textTracksManager = playerManager.getTextTracksManager();
-
+    console.log(this.allCCData);
+    if(this.allCCData && this.allCCData.length > 0){
+      for(var i=0 ; i<this.allCCData.length; i++){
+        let track = textTracksManager.createTrack();
+        track.trackContentType = 'text/vtt';
+        track.trackContentId = this.allCCData[i].subtitleUrl;
+        // track.language=getLanguageFromMap(this.allCCData[i].language);
+        track.language='en';
+        textTracksManager.addTracks([track]);
+      }
       const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
       textTracksManager.setActiveByIds([alltracks[0].trackId]);
-    // }
-    // else{
-    //   let tracks=textTracksManager.getTracks();
-    //   if(tracks.length>0){
-    //     let track=tracks[0];
-    //     track.isInband=true;
-    //     textTracksManager.setActiveByIds([track.trackId]);
-    //   }
-    // }
+    }
+    else{
+      let tracks=textTracksManager.getTracks();
+      if(tracks.length>0){
+        let track=tracks[0];
+        track.isInband=true;
+        textTracksManager.setActiveByIds([track.trackId]);
+      }
+    }
   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
