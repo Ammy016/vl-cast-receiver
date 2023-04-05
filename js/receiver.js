@@ -755,8 +755,8 @@ playerManager.addEventListener(
       for(var i=0 ; i<this.allCCData.length; i++){
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
-        track.trackContentId = this.allCCData[i].subtitleUrl;
-    
+        track.trackContentId = this.alCCData[i].subtitleUrl;
+        track.trackId=this.alCCData[i].language
         // track.language=getLanguageFromMap(this.allCCData[i].language);
         track.language='en';
         textTracksManager.addTracks([track]);
