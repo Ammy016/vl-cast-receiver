@@ -735,10 +735,10 @@ playerManager.setMessageInterceptor(
   });
 
 
-  playerManager.addEventListener(
-    cast.framework.events.EventType.TRACKS_CHANGED, (e) => {
-        console.log(e);
-    })
+  playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
+    // write logic to convert language codes here
+    console.log(request);
+  });
   
 
 playerManager.addEventListener(
@@ -752,6 +752,7 @@ playerManager.addEventListener(
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].subtitleUrl;
+    
         // track.language=getLanguageFromMap(this.allCCData[i].language);
         track.language='en';
         textTracksManager.addTracks([track]);
