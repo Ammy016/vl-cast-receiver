@@ -764,20 +764,21 @@ playerManager.addEventListener(
 
   });
 
+  playerManager.addEventListener(
+    cast.framework.events.category.REQUEST,
+    event => logEvent(event.type));
 
-  playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
-    console.log(request,'EDIT');
-    // write logic to convert language codes here
-  });
+//   playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
+//     console.log(request,'EDIT');
+//     // write logic to convert language codes here
+//   });
 
 playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => { 
    castDebugLogger.warn('ERROR', event);
 });
 
 
-playerManager.addEventListener(cast.framework.events.EventType.REQUEST_USER_ACTION, event => { 
-    console.log(event);
- });
+
 
 function getLanguageFromMap(key){
   console.log(languageMap);
