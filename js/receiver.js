@@ -731,8 +731,15 @@ playerManager.setMessageInterceptor(
   
   playerManager.addEventListener(
     cast.framework.events.EventType.MEDIA_STATUS, (event) => {
-
+        console.log(event);
   });
+
+
+  playerManager.addEventListener(
+    cast.framework.events.EventType.TRACKS_CHANGED, (e) => {
+        console.log(e);
+    })
+  
 
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
