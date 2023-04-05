@@ -766,7 +766,7 @@ playerManager.addEventListener(
 
   playerManager.addEventListener(
     cast.framework.events.category.REQUEST,
-    event => logEvent(event.type));
+    event => console.log(event.type));
 
 //   playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
 //     console.log(request,'EDIT');
