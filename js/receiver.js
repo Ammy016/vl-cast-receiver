@@ -762,7 +762,7 @@ playerManager.addEventListener(
       }
       const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
-      textTracksManager.setActiveByIds([alltracks[0].trackId]);
+    //   textTracksManager.setActiveByIds([alltracks[0].trackId]);
     }
     else{
       let tracks=textTracksManager.getTracks();
