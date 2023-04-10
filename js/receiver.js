@@ -738,9 +738,9 @@ playerManager.setMessageInterceptor(
   playerManager.setMessageInterceptor(cast.framework.messages.MessageType.EDIT_TRACKS_INFO, request => {
     // write logic to convert language codes here
     console.log(request);
-    // console.log(request.activeTrackIds);
-    // const textTracksManager = playerManager.getTextTracksManager();
-    // textTracksManager.setActiveByIds(request.activeTrackIds)
+    console.log(request.activeTrackIds);
+    const textTracksManager = playerManager.getTextTracksManager();
+    textTracksManager.setActiveByIds(request.activeTrackIds)
     // console.log();
   });
   
