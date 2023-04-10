@@ -766,6 +766,7 @@ playerManager.addEventListener(
     }
     else{
       let tracks=textTracksManager.getTracks();
+      console.log(tracks);
       if(tracks.length>0){
         let track=tracks[0];
         track.isInband=true;
