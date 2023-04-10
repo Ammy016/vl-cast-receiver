@@ -758,7 +758,6 @@ playerManager.addEventListener(
         track.trackContentId = this.allCCData[i].src;
         // track.trackId=this.allCCData[i].id
         track.language=getLanguageFromMap(this.allCCData[i].label);
-        track.language='en';
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
