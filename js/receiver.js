@@ -755,15 +755,14 @@ playerManager.addEventListener(
       for(var i=0 ; i<this.allCCData.length; i++){
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
-        track.trackContentId = this.allCCData[i].subtitleUrl;
-        // track.trackId=this.allCCData[i].language
-        track.language=getLanguageFromMap(this.allCCData[i].language);
-        track.language='en';
+        track.trackContentId = this.allCCData[i].src;
+        track.trackId=this.allCCData[i].id
+        track.language=getLanguageFromMap(this.allCCData[i].label);
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
-      textTracksManager.setActiveByIds([alltracks[0].trackId]);
+    //   textTracksManager.setActiveByIds([alltracks[0].trackId]);
     }
     else{
       let tracks=textTracksManager.getTracks();
