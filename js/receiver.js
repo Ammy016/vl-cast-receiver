@@ -756,13 +756,11 @@ playerManager.addEventListener(
         let track = textTracksManager.createTrack();
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].src;
-        // track.trackId=this.allCCData[i].id
         track.language=getLanguageFromMap(this.allCCData[i].label);
         textTracksManager.addTracks([track]);
       }
       const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
-    //   textTracksManager.setActiveByIds([alltracks[0].trackId]);
     }
     else{
       let tracks=textTracksManager.getTracks();
