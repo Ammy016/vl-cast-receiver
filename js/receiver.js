@@ -759,23 +759,23 @@ playerManager.addEventListener(
     // console.log(alltracks);
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
-      for(var i=0 ; i<this.allCCData.length; i++){
-        let track = textTracksManager.createTrack();
-        track.trackContentType = 'text/vtt';
-        track.trackContentId = this.allCCData[i].src;
-        track.language=getLanguageFromMap(this.allCCData[i].label);
-
-        if(embeddedCaps){
-            textTracksManager.setActiveByIds([alltracks[0].trackId]);
+        for (var i = 0; i < this.allCCData.length; i++) {
+            let track = textTracksManager.createTrack();
+            track.trackContentType = 'text/vtt';
+            track.trackContentId = this.allCCData[i].src;
+            track.language = getLanguageFromMap(this.allCCData[i].label);
+            if (embeddedCaps) {
+                if (this.allCCData[i].mode == "showing") {
+                    textTracksManager.setActiveByIds([alltracks[0].trackId]);
+                }
+            }
+            else {
+                textTracksManager.addTracks([track]);
+                if (this.allCCData[i].mode == "showing") {
+                    textTracksManager.setActiveByIds([track.trackId]);
+                }
+            }
         }
-        else{
-        textTracksManager.addTracks([track]);
-        if(this.allCCData[i].mode=="showing"){
-            textTracksManager.setActiveByIds([track.trackId]);
-        }
-        }
-
-      }
     //   const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
     }
