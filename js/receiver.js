@@ -757,7 +757,7 @@ playerManager.addEventListener(
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].src;
         track.language=getLanguageFromMap(this.allCCData[i].label);
-        // textTracksManager.addTracks([track]);
+        textTracksManager.addTracks([track]);
         if(this.allCCData[i].mode=="showing"){
             console.log('ENTERIG'); 
             console.log(track);
