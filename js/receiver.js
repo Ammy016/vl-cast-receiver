@@ -759,8 +759,9 @@ playerManager.addEventListener(
         track.language=getLanguageFromMap(this.allCCData[i].label);
         textTracksManager.addTracks([track]);
         if(this.allCCData[i].mode=="showing"){
-            console.log('ENTERIG');
-            track.isInband=true;
+            console.log('ENTERIG'); 
+            console.log(track);
+
             textTracksManager.setActiveByIds([track.trackId]);
         }
 
