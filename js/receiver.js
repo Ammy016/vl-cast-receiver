@@ -766,6 +766,7 @@ playerManager.addEventListener(
             track.language = getLanguageFromMap(this.allCCData[i].label);
             if (embeddedCaps) {
                 if (this.allCCData[i].mode == "showing") {
+                    console.log(alltracks[0],this.allCCData[i]);
                     textTracksManager.setActiveByIds([alltracks[0].trackId]);
                 }
             }
