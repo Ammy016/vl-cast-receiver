@@ -766,7 +766,7 @@ playerManager.addEventListener(
         track.language=getLanguageFromMap(this.allCCData[i].label);
 
         if(embeddedCaps){
-            textTracksManager.setActiveByIds([track.trackId]);
+            textTracksManager.setActiveByIds([alltracks[0].trackId]);
         }
         else{
         textTracksManager.addTracks([track]);
@@ -774,7 +774,6 @@ playerManager.addEventListener(
             textTracksManager.setActiveByIds([track.trackId]);
         }
         }
-
 
       }
     //   const alltracks = textTracksManager.getTracks();
