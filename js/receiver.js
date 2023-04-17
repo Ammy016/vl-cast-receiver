@@ -750,6 +750,11 @@ playerManager.addEventListener(
     castDebugLogger.warn('PLAYER LOADED');
     console.log(requestData)
     const textTracksManager = playerManager.getTextTracksManager();
+    const alltracks = textTracksManager.getTracks();
+    console.log(textTracksManager,'MANAGEr');
+    console.log(alltracks,'TRACKS');
+    
+    // console.log(alltracks);
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
       for(var i=0 ; i<this.allCCData.length; i++){
@@ -759,14 +764,11 @@ playerManager.addEventListener(
         track.language=getLanguageFromMap(this.allCCData[i].label);
         textTracksManager.addTracks([track]);
         if(this.allCCData[i].mode=="showing"){
-            console.log('ENTERIG'); 
-            console.log(track);
-
             textTracksManager.setActiveByIds([track.trackId]);
         }
 
       }
-      const alltracks = textTracksManager.getTracks();
+    //   const alltracks = textTracksManager.getTracks();
       console.log(alltracks);
     }
     else{
