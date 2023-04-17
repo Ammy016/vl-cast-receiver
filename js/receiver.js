@@ -760,6 +760,7 @@ playerManager.addEventListener(
         textTracksManager.addTracks([track]);
         if(this.allCCData[i].mode=='showing'){
             console.log('ENTERIG');
+            track.isInband=true;
             textTracksManager.setActiveByIds([track.trackId]);
         }
 
