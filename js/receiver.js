@@ -749,10 +749,12 @@ playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
     castDebugLogger.warn('PLAYER LOADED');
     console.log(requestData)
+
     const textTracksManager = playerManager.getTextTracksManager();
     const alltracks = textTracksManager.getTracks();
-    console.log(textTracksManager,'MANAGEr');
-    console.log(alltracks,'TRACKS');
+    let embeddedCaps=false;
+    if(alltracks.length>0)
+    embeddedCaps=true;
     
     // console.log(alltracks);
     console.log(this.allCCData);
@@ -762,10 +764,17 @@ playerManager.addEventListener(
         track.trackContentType = 'text/vtt';
         track.trackContentId = this.allCCData[i].src;
         track.language=getLanguageFromMap(this.allCCData[i].label);
+
+        if(embeddedCaps){
+            textTracksManager.setActiveByIds([track.trackId]);
+        }
+        else{
         textTracksManager.addTracks([track]);
         if(this.allCCData[i].mode=="showing"){
             textTracksManager.setActiveByIds([track.trackId]);
         }
+        }
+
 
       }
     //   const alltracks = textTracksManager.getTracks();
