@@ -785,8 +785,9 @@ playerManager.addEventListener(
       console.log(alltracks);
     }
     else{
+        console.log('entering inbandmode');
       let tracks=textTracksManager.getTracks();
-      console.log(tracks);
+      console.log('inbandmode tracks',tracks);
       if(tracks.length>0){
         let track=tracks[0];
         track.isInband=true;
