@@ -757,6 +757,7 @@ playerManager.addEventListener(
     embeddedCaps=true;
     
     // console.log(alltracks);
+    console.log('outside',this.allCCData);
     console.log(this.allCCData);
     if(this.allCCData && this.allCCData.length > 0){
         for (var i = 0; i < this.allCCData.length; i++) {
