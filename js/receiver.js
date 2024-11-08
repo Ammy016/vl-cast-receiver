@@ -765,6 +765,7 @@ playerManager.addEventListener(
             track.trackContentId = this.allCCData[i].src;
             track.language = getLanguageFromMap(this.allCCData[i].label);
             if (embeddedCaps) {
+                console.log('inband check1');
                 if (this.allCCData[i].mode == "showing") {
                     alltracks.map((ele)=>{
                         if(ele.name==this.allCCData[i].label || ele.language==this.allCCData[i].language){
