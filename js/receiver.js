@@ -697,7 +697,7 @@ playerManager.setMessageInterceptor(
     //     request.media.streamType="BUFFERED"
     //     request.duration = request.media.customData.duration;
     //   }
-    request.media.streamType="BUFFERED"
+    request.media.streamType="LIVE"
       // playerManager
       // .setMediaPlaybackInfoHandler(
       //   (loadRequestData, playbackConfig) => {
