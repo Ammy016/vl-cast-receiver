@@ -723,18 +723,8 @@ playerManager.setMessageInterceptor(
       metadata.images=[image]
       metadata.subtitle = ""
       request.media.metadata = metadata;
-    //   resolve(request);
+      resolve(request);
 
-
-        if(isDrmEnabled){
-            playerManager.addEventListener(cast.framework.events.EventType.MEDIA_STATUS, event => {
-                const mediaStatus = event.mediaStatus;
-                console.log('mediastatus',mediaStatus);
-                if (mediaStatus && mediaStatus.drmStatus === cast.framework.DrmStatus.READY) {
-                    resolve(request)
-                }
-              });
-        }
     });
   });
 
