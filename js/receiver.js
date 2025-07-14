@@ -730,6 +730,12 @@ playerManager.setMessageInterceptor(
   });
 
 
+  playerManager.addEventListener(cast.framework.events.EventType.AD_BREAK_STARTED,(event)=>{
+    console.log('AD STARTED');
+  });
+  playerManager.addEventListener(cast.framework.events.EventType.AD_BREAK_ENDED,(event)=>{
+    console.log('AD ENDED');
+  });
 
   
   playerManager.addEventListener(
