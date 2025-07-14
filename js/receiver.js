@@ -712,6 +712,7 @@ playerManager.setMessageInterceptor(
       //   });
 
       // Add metadata
+      console.log('TEST1',request.media);
     if(request.media.customData.subTitles){
       ref.allCCData=request.media.customData.subTitles;
     }
