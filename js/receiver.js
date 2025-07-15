@@ -763,7 +763,7 @@ playerManager.addEventListener(
     // console.log(alltracks);
     console.log('outside',this.allCCData,alltracks);
     console.log(this.allCCData);
-    if(this.allCCData && this.allCCData.length > 0){
+    if(Array.isArray(this?.allCCData) && this.allCCData.length > 0){
         for (var i = 0; i < this.allCCData.length; i++) {
             let track = textTracksManager.createTrack();
             track.trackContentType = 'text/vtt';
@@ -779,8 +779,8 @@ playerManager.addEventListener(
                     })
                    
                 }
-            }
-            else {
+            } 
+            else if (track?.trackContentId && track?.language && track?.trackId) {
                 textTracksManager.addTracks([track]);
                 if (this.allCCData[i].mode == "showing") {
                     textTracksManager.setActiveByIds([track.trackId]);
@@ -797,6 +797,7 @@ playerManager.addEventListener(
       if(tracks.length>0){
         let track=tracks[0];
         track.isInband=true;
+        if (track.trackId)
         textTracksManager.setActiveByIds([track.trackId]);
       }
     }
@@ -816,15 +817,35 @@ playerManager.addEventListener(cast.framework.events.EventType.ERROR, event => {
    castDebugLogger.warn('ERROR', event);
 });
 
-
+playerManager.addEventListener(cast.framework.events.EventType.BREAK_STARTED, event => {
+    console.log('Break started BREAK_STARTED', event);
+    console.log("Break started BREAK_STARTED time", Date.now().toLocaleString())
+})
+playerManager.addEventListener(cast.framework.events.EventType.BREAK_ENDED, event => {
+    console.log('Break started BREAK_ENDED', event);
+    console.log("Break started BREAK_ENDED time", Date.now().toLocaleString())
+})
+playerManager.addEventListener(cast.framework.events.EventType.BREAK_CLIP_STARTED, event => {
+    console.log('Break started BREAK_CLIP_STARTED', event);
+    console.log("Break started BREAK_CLIP_STARTED time", Date.now().toLocaleString())
+})
+playerManager.addEventListener(cast.framework.events.EventType.BREAK_CLIP_ENDED, event => {
+    console.log('Break started BREAK_CLIP_ENDED', event);
+    console.log("Break started BREAK_CLIP_ENDED time", Date.now().toLocaleString())
+})
+playerManager.addEventListener(cast.framework.events.EventType.BREAK_CLIP_LOADING, event => {
+    console.log('Break started BREAK_CLIP_LOADING', event);
+    console.log("Break started BREAK_CLIP_LOADING time", Date.now().toLocaleString())
+})
 
 
 function getLanguageFromMap(key){
-  console.log(languageMap);
   let val=null;
   if(languageMap && languageMap.length>0){
     for(let i=0;i<languageMap.length;i++){
-      if(languageMap[i].name==key || languageMap[i].nativeName==key){
+      if(languageMap[i].name==key || 
+         languageMap[i].nativeName==key || 
+         languageMap[i].codeName==key){
         val= languageMap[i].codeName;
         break;
       }
