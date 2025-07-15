@@ -2,6 +2,20 @@ const context = cast.framework.CastReceiverContext.getInstance();
 const playerManager = context.getPlayerManager();
 const requestData = new cast.framework.messages.SeekRequestData()
 const playbackConfig = new cast.framework.PlaybackConfig();
+
+
+
+// init Conviva sdk
+let settings = {};
+let videoAnalytics = null;
+
+
+
+// const options = {};
+// options[Conviva.Constants.CONVIVA_MODULE] = ConvivaChromecastCafModule;
+   
+
+
 const languageMap= [
   {
       "guid": "af-guid",
@@ -638,6 +652,12 @@ playerManager.addEventListener(cast.framework.events.category.CORE,
     console.log("Core event: " + event.type);
 });
 
+context.addEventListener(cast.framework.system.EventType.READY, () => {
+    // Your app is ready, now you can safely execute code.
+    console.log('Receiver is ready!');
+    // e.g., document.getElementById('my-image').style.display = 'block';
+  });
+
 // playerManager.setMessageInterceptor(
 //   cast.framework.messages.MessageType.SEEK,
 //   data => {
@@ -692,6 +712,25 @@ playerManager.setMessageInterceptor(
     if (request.media && request.media.entity) {
       request.media.contentId = request.media.entity;
     }
+    
+    
+    // initialize Conviva
+    const customerKey = request?.media?.customData?.convivaCustomData?.customerKey
+    const debug = request?.media?.customData?.convivaCustomData?.debug;
+    
+    if (debug){
+        settings[Conviva?.Constants?.GATEWAY_URL] = `https://${customerKey}.ts-testonly.conviva.com`;
+        settings[Conviva?.Constants?.LOG_LEVEL] = Conviva?.Constants?.LogLevel.DEBUG;
+    }
+    const contentInfo = {...(request?.media?.customData?.convivaCustomData || {})}
+    
+    Conviva.Analytics.init(customerKey, null, settings);
+    videoAnalytics = Conviva.Analytics.buildVideoAnalytics();
+    videoAnalytics.setPlayer(playerManager);
+    videoAnalytics.setContentInfo(contentInfo);
+  
+    videoAnalytics.reportPlaybackRequested(contentInfo);
+
     let ref=this;
 
     return new Promise((resolve, reject) => {
@@ -760,7 +799,21 @@ playerManager.setMessageInterceptor(
   
   playerManager.addEventListener(
     cast.framework.events.EventType.MEDIA_STATUS, (event) => {
-        console.log(event);
+        (event) => {
+            if (
+              event.mediaStatus &&
+              event.mediaStatus.playerState === cast.framework.messages.PlayerState.IDLE &&
+              event.mediaStatus.idleReason === cast.framework.messages.IdleReason.FINISHED
+            ) {
+              console.log('Media playback finished.');
+        
+              // Conviva: Report playback ended
+              if (videoAnalytics && Conviva) {
+                videoAnalytics.release();
+                Conviva.Analytics.release();// Or similar method to end session
+              }
+            }
+        }
   });
 
 

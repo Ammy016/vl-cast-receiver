@@ -9,15 +9,23 @@
         --splash-image: url('css/res/background-1.jpg');
       }
     </style>
+     <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+     <!-- Cast Debug Logger -->
+     <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+    
+
+    <script  src="js/conviva_core_sdk.js"></script>
+    <script  src="js/conviva_chromecast_cafmodule.js"></script>
+    
   </head>
   
 
   <body>
     <cast-media-player></cast-media-player>
-    <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
-    <!-- Cast Debug Logger -->
-    <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
-    <script  src="js/receiver.js"></script>
+
+    <footer>
+      <script  src="js/receiver.js"></script>
+    </footer>
 
   </body>
 </html>
