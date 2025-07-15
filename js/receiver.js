@@ -748,6 +748,29 @@ playerManager.setMessageInterceptor(
 //     // console.log();
 //   });
   
+//allTrack = Array(1) (embedded tracks)
+// 0: lj
+// assocLanguage: undefined
+// audioTrackInfo: undefined
+// customData: undefined
+// isInband: undefined
+// language: "en"
+// name: undefined
+// roles: (2) ["subtitle", "main"]
+// subtype: "SUBTITLE"
+// trackContentId: undefined
+// trackContentType: "application/mp4"
+// trackId: 2
+// type: "TEXT"
+
+//this.allCCData = Array(2) (external captions data)
+// cues: []
+// id: "vjs_track_889"
+// kind: "subtitles"
+// label: "en"
+// language: "en"
+// mode: "showing"
+
 
 playerManager.addEventListener(
   cast.framework.events.EventType.PLAYER_LOAD_COMPLETE, () => {
@@ -755,32 +778,38 @@ playerManager.addEventListener(
     console.log("request DATA",requestData)
 
     const textTracksManager = playerManager.getTextTracksManager();
-    const alltracks = textTracksManager.getTracks();
-    let embeddedCaps=false;
+    const alltracks = textTracksManager.getTracks(); //get all embedded tracks in media (inband tracks)
+    let embeddedCaps = false;
     if(alltracks.length>0)
     embeddedCaps=true;
     
     // console.log(alltracks);
     console.log('outside',this.allCCData,alltracks);
     console.log(this.allCCData);
-    if(Array.isArray(this?.allCCData) && this.allCCData.length > 0){
+    if(Array.isArray(this?.allCCData) && this.allCCData.length > 0){ //this.allCCData is external captions data
         for (var i = 0; i < this.allCCData.length; i++) {
-            let track = textTracksManager.createTrack();
-            track.trackContentType = 'text/vtt';
-            track.trackContentId = this.allCCData[i].src;
-            track.language = getLanguageFromMap(this.allCCData[i].label);
+            let track = null
+            const trackLanguage = getLanguageFromMap(this.allCCData[i]?.label)
+            if (this.allCCData[i]?.src && trackLanguage) {
+                console.log('inband check2');
+                track = textTracksManager.createTrack();
+                track.trackContentType = 'text/vtt';
+                track.trackContentId = this.allCCData[i].src;
+                track.language = getLanguageFromMap(this.allCCData[i].label);
+            }
             if (embeddedCaps) {
                 console.log('inband check1');
-                if (this.allCCData[i].mode == "showing") {
-                    alltracks.map((ele)=>{
-                        if(ele.name==this.allCCData[i].label || ele.language==this.allCCData[i].language){
-                            textTracksManager.setActiveByIds([alltracks[i].trackId]);
-                        }
-                    })
+                // if (this.allCCData[i].mode == "showing") {
+                //     alltracks.map((ele)=>{
+                //         if(ele.name==this.allCCData[i].label || ele.language==this.allCCData[i].language){
+                //             textTracksManager.setActiveByIds([alltracks[i].trackId]);
+                //         }
+                //     })
                    
-                }
-            } 
-            else if (track?.trackContentId && track?.language && track?.trackId) {
+                // }
+            }    //add external captions data if no embedded captions are present and valid external captions data is present
+            else if (track && track?.trackContentId && track?.language && track?.trackId) {
+                console.log('inband check3');
                 textTracksManager.addTracks([track]);
                 if (this.allCCData[i].mode == "showing") {
                     textTracksManager.setActiveByIds([track.trackId]);
@@ -839,7 +868,14 @@ playerManager.addEventListener(cast.framework.events.EventType.BREAK_CLIP_LOADIN
 })
 
 
-function getLanguageFromMap(key){
+
+// {
+//     "guid": "zu-guid",
+//     "name": "Zulu",
+//     "nativeName": "Zulu",
+//     "codeName": "zu"
+// }
+function getLanguageFromMap(key){ //e.g label - en
   let val=null;
   if(languageMap && languageMap.length>0){
     for(let i=0;i<languageMap.length;i++){
