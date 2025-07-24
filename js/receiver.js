@@ -630,7 +630,7 @@ const languageMap= [
 ]
 // import {languageMap} from '../assets/languageMap.js';
 
-console.log("%cReceiver Version: 1", "color: blue; font-size: 16px; font-weight: bold;");
+console.log("%cReceiver Version: 1.1", "color: blue; font-size: 16px; font-weight: bold;");
 
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
