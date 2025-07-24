@@ -630,6 +630,8 @@ const languageMap= [
 ]
 // import {languageMap} from '../assets/languageMap.js';
 
+console.log("%cReceiver Version: 1", "color: blue; font-size: 16px; font-weight: bold;");
+
 // Listen and log all Core Events.
 playerManager.addEventListener(cast.framework.events.category.CORE,
   event => {
@@ -652,6 +654,29 @@ playerManager.addEventListener(cast.framework.events.category.CORE,
 // )
 
 
+
+playerManager.addEventListener(
+    cast.framework.events.EventType.ERROR, ({detailedErrorCode,error,reason,severity}) => {
+        const INVALID_MP4_TTML = 2007
+        console.log('Error detailedErrorCode:', detailedErrorCode);
+        console.log('Error occurred:',error);
+        console.log('Error reason:',reason);
+        console.log('Error severity:',severity);
+        
+        
+        try {
+            const textTracksManager = playerManager.getTextTracksManager();
+            const err = detailedErrorCode || error?.errorDetail;
+            if (err && err?.code === INVALID_MP4_TTML) {
+                console.log("%cInvalid TTML subtitles. Disabling subtitles.", "color: red; font-size: 14px; font-weight: bold;");
+                textTracksManager.setActiveByIds(null); // this disables subtitles
+            }
+        } catch (error) {
+            console.log('Error handling error:', error);
+        }
+
+    }
+)
 
 
 playerManager.addEventListener(
