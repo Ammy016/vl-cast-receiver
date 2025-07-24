@@ -666,8 +666,8 @@ playerManager.addEventListener(
         
         try {
             const textTracksManager = playerManager.getTextTracksManager();
-            const err = detailedErrorCode || error?.errorDetail;
-            if (err && err?.code === INVALID_MP4_TTML) {
+            const err = error?.shakaErrorCode;
+            if (err && err === INVALID_MP4_TTML) {
                 console.log("%cInvalid TTML subtitles. Disabling subtitles.", "color: red; font-size: 14px; font-weight: bold;");
                 textTracksManager.setActiveByIds(null); // this disables subtitles
             }
