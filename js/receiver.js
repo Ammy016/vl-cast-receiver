@@ -713,23 +713,37 @@ playerManager.setMessageInterceptor(
       request.media.contentId = request.media.entity;
     }
     
-    
-    // initialize Conviva
-    const customerKey = request?.media?.customData?.convivaCustomData?.customerKey
-    const debug = request?.media?.customData?.convivaCustomData?.debug;
-    
-    if (debug){
-        settings[Conviva?.Constants?.GATEWAY_URL] = `https://${customerKey}.ts-testonly.conviva.com`;
-        settings[Conviva?.Constants?.LOG_LEVEL] = Conviva?.Constants?.LogLevel.DEBUG;
+    try {
+         // initialize Conviva
+            const customerKey = request?.media?.customData?.convivaMetaData?.customerKey
+            const debug = request?.media?.customData?.convivaMetaData?.debug;
+
+            if (customerKey){
+            
+                if (debug){
+                    settings[Conviva?.Constants?.GATEWAY_URL] = `https://${customerKey}.ts-testonly.conviva.com`;
+                    settings[Conviva?.Constants?.LOG_LEVEL] = Conviva?.Constants?.LogLevel.DEBUG;
+                }
+
+                if (request?.media?.customData?.convivaMetaData) {
+                    delete request.media.customData.convivaMetaData.customerKey;
+                    delete request.media.customData.convivaMetaData.debug;
+                }
+                
+                const contentInfo = {...(request?.media?.customData?.convivaMetaData || {})}
+                
+                Conviva.Analytics.init(customerKey, null, settings);
+                videoAnalytics = Conviva.Analytics.buildVideoAnalytics();
+                videoAnalytics.setPlayer(playerManager);
+                videoAnalytics.setContentInfo(contentInfo);
+            
+                videoAnalytics.reportPlaybackRequested(contentInfo);
+        }
+    } catch (error) {
+        console.log('Conviva initialization error:', error);
     }
-    const contentInfo = {...(request?.media?.customData?.convivaCustomData || {})}
     
-    Conviva.Analytics.init(customerKey, null, settings);
-    videoAnalytics = Conviva.Analytics.buildVideoAnalytics();
-    videoAnalytics.setPlayer(playerManager);
-    videoAnalytics.setContentInfo(contentInfo);
-  
-    videoAnalytics.reportPlaybackRequested(contentInfo);
+   
 
     let ref=this;
 
@@ -798,22 +812,21 @@ playerManager.setMessageInterceptor(
 
   
   playerManager.addEventListener(
-    cast.framework.events.EventType.MEDIA_STATUS, (event) => {
+    cast.framework.events.EventType.MEDIA_FINISHED, (event) => {
         (event) => {
-            if (
-              event.mediaStatus &&
-              event.mediaStatus.playerState === cast.framework.messages.PlayerState.IDLE &&
-              event.mediaStatus.idleReason === cast.framework.messages.IdleReason.FINISHED
-            ) {
-              console.log('Media playback finished.');
-        
-              // Conviva: Report playback ended
-              if (videoAnalytics && Conviva) {
-                videoAnalytics.release();
-                Conviva.Analytics.release();// Or similar method to end session
-              }
+            console.log('Media finished event: ');
+            if (videoAnalytics) {
+                videoAnalytics.reportPlaybackEnded();
             }
         }
+  });
+
+  window.addEventListener('unload', () => {
+    console.log("Conviva: Window unloading. Releasing analytics.");
+    if (videoAnalytics) {
+        videoAnalytics.release();
+        Conviva.Analytics.release();
+    }
   });
 
 
