@@ -712,6 +712,16 @@ playerManager.setMessageInterceptor(
     if (request.media && request.media.entity) {
       request.media.contentId = request.media.entity;
     }
+
+    if (request.media && !request.media?.customData) {
+        try {
+         const parsedContentId = JSON.parse(request?.media?.contentId);
+         request.media.contentId = parsedContentId?.dash ?? "";
+         request.media['customData'] = parsedContentId?.metadata?.customData ?? {};
+        } catch (error) {
+         console.log('Error parsing contentId as JSON:', error);
+        }
+       }
     
     try {
          // initialize Conviva
